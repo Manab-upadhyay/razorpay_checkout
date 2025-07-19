@@ -1,27 +1,73 @@
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-  const queryParams = new URLSearchParams(window.location.search);
-  const order_id = queryParams.get('order_id');
-  const amount = queryParams.get('amount');
-  const email = queryParams.get('email');
-
-  const options = {
-    key: "RAZORPAY_KEY_ID",
-    amount: amount,
-    currency: "INR",
-    name: "Unilearn",
-    order_id: order_id,
-    handler: function (response) {
-      // You can send this response to your backend
-      alert('Payment Success');
-    },
-    prefill: {
-      email: email
-    },
-    theme: {
-      color: "#3399cc"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Processing Payment</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #f4f4f4;
+      color: #333;
     }
-  };
-  const rzp = new Razorpay(options);
-  rzp.open();
-</script>
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 16px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="loader"></div>
+  <h2>Processing your payment...</h2>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    const queryParams = new URLSearchParams(window.location.search);
+    const order_id = queryParams.get('order_id');
+    const amount = queryParams.get('amount');
+    const email = queryParams.get('email');
+    const razorpay_key= queryParams.get('razorpay_key');
+    console.log(razorpay_key)
+
+    const options = {
+      key: razorpay_key, // Replace with your actual Razorpay key ID
+      amount: amount,
+      currency: "INR",
+      name: "Unilearn",
+      order_id: order_id,
+      handler: function (response) {
+        alert('✅ Payment Success');
+        // Optionally redirect to success page
+        // window.location.href = "/success.html";
+      },
+      prefill: {
+        email: email
+      },
+      theme: {
+        color: "#3399cc"
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+  </script>
+</body>
+</html>
