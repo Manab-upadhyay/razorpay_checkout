@@ -1,0 +1,27 @@
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  const queryParams = new URLSearchParams(window.location.search);
+  const order_id = queryParams.get('order_id');
+  const amount = queryParams.get('amount');
+  const email = queryParams.get('email');
+
+  const options = {
+    key: "RAZORPAY_KEY_ID",
+    amount: amount,
+    currency: "INR",
+    name: "Unilearn",
+    order_id: order_id,
+    handler: function (response) {
+      // You can send this response to your backend
+      alert('Payment Success');
+    },
+    prefill: {
+      email: email
+    },
+    theme: {
+      color: "#3399cc"
+    }
+  };
+  const rzp = new Razorpay(options);
+  rzp.open();
+</script>
